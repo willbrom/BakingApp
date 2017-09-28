@@ -8,14 +8,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.udacity.willbrom.bakingapp.model.RecipeModel;
 import com.udacity.willbrom.bakingapp.utilities.NetworkUtils;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     private static final int LOADER_NUM = 11;
-    TextView results;
+    private TextView results;
+
+//    used by Gson to map Json array to List of type RecipeModel
+    private List<RecipeModel> recipeModel;
+    private final Type recipeListType = new TypeToken<ArrayList<RecipeModel>>(){}.getType();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +65,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public String loadInBackground() {
                 Log.d(TAG, "loadInBackground called");
-                return NetworkUtils.getHttpResponse(RECIPE_URL);
+                String returnedJson = NetworkUtils.getHttpResponse(RECIPE_URL);
+                Log.d(TAG, returnedJson);
+                return returnedJson;
             }
 
             @Override
@@ -69,8 +82,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<String> loader, String data) {
         if (data != null) {
-            Log.d(TAG, data);
-            results.setText(data);
+//            Gson at work here, mapping Json to List of type RecipeModel
+            recipeModel = new Gson().fromJson(data, recipeListType);
+            for (int i = 0; i < recipeModel.size(); i++ ) {
+                results.append(recipeModel.get(i).getName() + "\n\n\n");
+            }
         }
         else
             Log.d(TAG, "no data returned");

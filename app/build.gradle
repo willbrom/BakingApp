@@ -30,4 +30,6 @@ dependencies {
 
 //    dependency to make network call's
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
+//    dependency to convert json to java object
+    compile 'com.google.code.gson:gson:2.8.0'
 }
