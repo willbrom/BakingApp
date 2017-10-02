@@ -1,4 +1,4 @@
-package com.udacity.willbrom.bakingapp.model;
+package com.udacity.willbrom.bakingapp.models;
 
 
 /**
