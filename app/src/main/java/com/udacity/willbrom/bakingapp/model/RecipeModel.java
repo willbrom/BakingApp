@@ -1,4 +1,4 @@
-package com.udacity.willbrom.bakingapp.models;
+package com.udacity.willbrom.bakingapp.model;
 
 
 import java.util.List;
