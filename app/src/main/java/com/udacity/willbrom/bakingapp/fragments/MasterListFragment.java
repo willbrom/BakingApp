@@ -2,6 +2,7 @@ package com.udacity.willbrom.bakingapp.fragments;
 
 
 import android.os.AsyncTask;
+import android.os.Binder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,16 +27,17 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
-public class MasterListFragment extends Fragment {
+public class MasterListFragment extends Fragment implements RecipeListAdapter.ItemClickListener {
 
     private static final String TAG = MasterListFragment.class.getSimpleName();
     private static final String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
     private List<RecipeModel> recipeModel;
     private final Type recipeListType = new TypeToken<ArrayList<RecipeModel>>(){}.getType();
-    @BindView(R.id.recipe_list)
-    RecyclerView recipeList;
+    @BindView(R.id.recipe_list) RecyclerView recipeList;
+    private Unbinder unbinder;
     private RecipeListAdapter recipeListAdapter;
 
     public MasterListFragment(){}
@@ -45,12 +48,24 @@ public class MasterListFragment extends Fragment {
         Log.d(TAG, "onCreateView called!!");
         new PerformNetworkTask().execute();
         View rootView = inflater.inflate(R.layout.fragment_master_list, container, false);
-        ButterKnife.bind(this, rootView);
-        recipeListAdapter = new RecipeListAdapter();
+        unbinder = ButterKnife.bind(this, rootView);
+        recipeListAdapter = new RecipeListAdapter(this);
         recipeList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
         recipeList.setHasFixedSize(true);
         recipeList.setAdapter(recipeListAdapter);
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onClick(RecipeModel recipeModel) {
+        Log.d(TAG, recipeModel.getName());
+        Toast.makeText(getActivity(), recipeModel.getName(), Toast.LENGTH_SHORT).show();
     }
 
     public class PerformNetworkTask extends AsyncTask<Void, Void, String>{
@@ -68,7 +83,7 @@ public class MasterListFragment extends Fragment {
             if (s != null) {
                 recipeModel = new Gson().fromJson(s, recipeListType);
                 Log.d(TAG, recipeModel.get(0).getName());
-                recipeListAdapter.setRecipeModel(recipeModel);
+                recipeListAdapter.setRecipeModelList(recipeModel);
             }
 
         }
