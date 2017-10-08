@@ -1,6 +1,8 @@
 package com.udacity.willbrom.bakingapp.fragments;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.udacity.willbrom.bakingapp.R;
+import com.udacity.willbrom.bakingapp.RecipeDetailActivity;
 import com.udacity.willbrom.bakingapp.adapter.RecipeListAdapter;
 import com.udacity.willbrom.bakingapp.model.RecipeModel;
 import com.udacity.willbrom.bakingapp.utilitie.NetworkUtils;
@@ -39,6 +42,23 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     @BindView(R.id.recipe_list) RecyclerView recipeList;
     private Unbinder unbinder;
     private RecipeListAdapter recipeListAdapter;
+    private OnRecipeClickListener recipeClickListener;
+
+    public interface OnRecipeClickListener{
+        void onRecipeClicked(RecipeModel recipeModel);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            recipeClickListener = (OnRecipeClickListener) context;
+        } catch (ClassCastException ec) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnRecipeClickListener");
+        }
+    }
 
     public MasterListFragment(){}
 
@@ -65,7 +85,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     @Override
     public void onClick(RecipeModel recipeModel) {
         Log.d(TAG, recipeModel.getName());
-        Toast.makeText(getActivity(), recipeModel.getName(), Toast.LENGTH_SHORT).show();
+        recipeClickListener.onRecipeClicked(recipeModel);
     }
 
     public class PerformNetworkTask extends AsyncTask<Void, Void, String>{

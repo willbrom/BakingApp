@@ -1,12 +1,14 @@
 package com.udacity.willbrom.bakingapp.model;
 
 
+import java.io.Serializable;
+
 /**
  * class used by Gson library
  * to map 'steps JSON array'
  * */
 
-public class StepsModel {
+public class StepsModel implements Serializable {
     private int id;
     private String shortDescription;
     private String description;

@@ -1,6 +1,7 @@
 package com.udacity.willbrom.bakingapp.model;
 
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * to map 'root JSON array'
 * */
 
-public class RecipeModel {
+public class RecipeModel implements Serializable {
 
     private int id;
     private String name;
