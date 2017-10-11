@@ -65,6 +65,11 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
         return recipeModelList.size();
     }
 
+    public void setRecipeModelList(List<RecipeModel> recipeModelList) {
+        this.recipeModelList = recipeModelList;
+        notifyDataSetChanged();
+    }
+
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.recipe_thumbnail) ImageView recipeThumbnail;
@@ -85,8 +90,4 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
 
     }
 
-    public void setRecipeModelList(List<RecipeModel> recipeModelList) {
-        this.recipeModelList = recipeModelList;
-        notifyDataSetChanged();
-    }
 }
