@@ -30,6 +30,8 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     @Override
     public void onBindViewHolder(IngredientViewHolder holder, int position) {
         holder.ingredientTitle.setText(ingredientsModelList.get(position).getIngredient());
+        holder.ingredientQuantity.setText(String.valueOf(ingredientsModelList.get(position).getQuantity()));
+        holder.ingredientMeasure.setText(" " + ingredientsModelList.get(position).getMeasure());
     }
 
     @Override
@@ -41,12 +43,13 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     class IngredientViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.ingredient_title) TextView ingredientTitle;
+        @BindView(R.id.ingredient_quantity) TextView ingredientQuantity;
+        @BindView(R.id.ingredient_measure) TextView ingredientMeasure;
 
         public IngredientViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
 
     public void setIngredientsModelList(List<IngredientsModel> ingredientsModelList) {
