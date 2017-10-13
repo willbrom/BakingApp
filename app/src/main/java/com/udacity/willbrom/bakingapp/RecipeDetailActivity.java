@@ -5,15 +5,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.udacity.willbrom.bakingapp.fragments.RecipeIngredientFragment;
 import com.udacity.willbrom.bakingapp.fragments.RecipeStepFragment;
+import com.udacity.willbrom.bakingapp.model.IngredientsModel;
 import com.udacity.willbrom.bakingapp.model.RecipeModel;
+
+import java.io.Serializable;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends AppCompatActivity
+        implements RecipeIngredientFragment.OnIngredientItemClickListener {
 
 
     @Override
@@ -39,5 +45,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .add(R.id.recipe_step_container, stepFragment)
                 .commit();
+    }
+
+    @Override
+    public void onItemClicked(List<IngredientsModel> ingredientsModelList) {
+        Intent intent = new Intent(this, IngredientDetailActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("key", (Serializable) ingredientsModelList);
+        intent.putExtra(Intent.EXTRA_TEXT, bundle);
+        startActivity(intent);
     }
 }
