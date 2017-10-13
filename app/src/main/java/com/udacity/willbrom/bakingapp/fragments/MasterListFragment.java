@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.udacity.willbrom.bakingapp.adapter.RecipeListAdapter;
 import com.udacity.willbrom.bakingapp.model.RecipeModel;
 import com.udacity.willbrom.bakingapp.utilitie.NetworkUtils;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     private Unbinder unbinder;
     private RecipeListAdapter recipeListAdapter;
     private OnRecipeClickListener recipeClickListener;
+
 
     public interface OnRecipeClickListener{
         void onRecipeClicked(RecipeModel recipeModel);
@@ -66,14 +69,32 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView called!!");
-        new PerformNetworkTask().execute();
+
         View rootView = inflater.inflate(R.layout.fragment_master_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         recipeListAdapter = new RecipeListAdapter(this);
         recipeList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
         recipeList.setHasFixedSize(true);
         recipeList.setAdapter(recipeListAdapter);
+
+        if (savedInstanceState != null) {
+            recipeModel = (List<RecipeModel>) savedInstanceState.getSerializable("ser");
+            recipeListAdapter = new RecipeListAdapter(this);
+            recipeListAdapter.setRecipeModelList(recipeModel);
+            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("par");
+            recipeList.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+        } else {
+            new PerformNetworkTask().execute();
+        }
+
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("ser", (Serializable) recipeModel);
+        outState.putParcelable("par", recipeList.getLayoutManager().onSaveInstanceState());
     }
 
     @Override

@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 public class RecipeDetailActivity extends AppCompatActivity
         implements RecipeIngredientFragment.OnIngredientItemClickListener {
 
+    private RecipeModel recipeModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +30,29 @@ public class RecipeDetailActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        RecipeModel recipeModel = (RecipeModel) bundle.getSerializable("key");
+        recipeModel = (RecipeModel) bundle.getSerializable("key");
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+
         RecipeIngredientFragment ingredientFragment = new RecipeIngredientFragment();
         ingredientFragment.setIngredientsModelList(recipeModel.getIngredients());
 
-        fragmentManager.beginTransaction()
-                .add(R.id.recipe_ingredient_container, ingredientFragment)
-                .commit();
-
+        if (savedInstanceState == null) {
+            fragmentManager.beginTransaction()
+                    .add(R.id.recipe_ingredient_container, ingredientFragment)
+                    .commit();
+        } else {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.recipe_ingredient_container, ingredientFragment)
+                    .commit();
+        }
         RecipeStepFragment stepFragment = new RecipeStepFragment();
         stepFragment.setStepsModelList(recipeModel.getSteps());
 
         fragmentManager.beginTransaction()
                 .add(R.id.recipe_step_container, stepFragment)
                 .commit();
+
     }
 
     @Override
