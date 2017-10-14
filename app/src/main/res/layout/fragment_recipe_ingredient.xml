@@ -14,12 +14,12 @@
         android:background="?android:selectableItemBackground">
 
         <TextView
-            android:layout_gravity="center"
+            android:gravity="center"
             android:text="Ingredient"
             android:fontFamily="cursive"
             android:textSize="22sp"
             android:background="?android:selectableItemBackground"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
 

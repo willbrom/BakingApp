@@ -1,31 +1,20 @@
 package com.udacity.willbrom.bakingapp.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.udacity.willbrom.bakingapp.IngredientDetailActivity;
 import com.udacity.willbrom.bakingapp.R;
-import com.udacity.willbrom.bakingapp.adapter.IngredientListAdapter;
 import com.udacity.willbrom.bakingapp.model.IngredientsModel;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 public class RecipeIngredientFragment extends Fragment {
@@ -34,7 +23,7 @@ public class RecipeIngredientFragment extends Fragment {
     private OnIngredientItemClickListener clickListener;
 
     public interface OnIngredientItemClickListener {
-        void onItemClicked(List<IngredientsModel> ingredientsModelList);
+        void onIngredientItemClicked(List<IngredientsModel> ingredientsModelList);
     }
 
     @Override
@@ -61,7 +50,7 @@ public class RecipeIngredientFragment extends Fragment {
 
     @OnClick(R.id.card_ingredient)
     void onClick() {
-        clickListener.onItemClicked(ingredientsModelList);
+        clickListener.onIngredientItemClicked(ingredientsModelList);
     }
 
     @Override

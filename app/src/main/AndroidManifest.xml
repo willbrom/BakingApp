@@ -21,8 +21,8 @@
         <activity
             android:name=".RecipeDetailActivity"
             android:label="Detail"
-            android:parentActivityName=".MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -35,6 +35,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RecipeDetailActivity" />
         </activity>
+        <activity android:name=".StepDetailActivity"></activity>
     </application>
 
 </manifest>
