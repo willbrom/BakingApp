@@ -35,7 +35,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".RecipeDetailActivity" />
         </activity>
-        <activity android:name=".StepDetailActivity"></activity>
+        <activity
+            android:name=".StepDetailActivity"
+            android:configChanges="orientation|screenSize">
+
+        </activity>
     </application>
 
 </manifest>
