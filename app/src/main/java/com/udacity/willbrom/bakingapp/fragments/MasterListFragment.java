@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -45,7 +46,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     private Unbinder unbinder;
     private RecipeListAdapter recipeListAdapter;
     private OnRecipeClickListener recipeClickListener;
-
+    private boolean mTwoPane;
 
     public interface OnRecipeClickListener{
         void onRecipeClicked(RecipeModel recipeModel);
@@ -73,7 +74,15 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
         View rootView = inflater.inflate(R.layout.fragment_master_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         recipeListAdapter = new RecipeListAdapter(this);
-        recipeList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
+
+        if (rootView.findViewById(R.id.check_view) != null) {
+            mTwoPane = true;
+            recipeList.setLayoutManager(new GridLayoutManager(rootView.getContext(), 2, GridLayoutManager.VERTICAL, false));
+        } else {
+            mTwoPane = false;
+            recipeList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
+        }
+
         recipeList.setHasFixedSize(true);
         recipeList.setAdapter(recipeListAdapter);
 
