@@ -59,6 +59,7 @@ public class RecipeStepFragment extends Fragment implements StepListAdapter.Step
         stepListAdapter.setStepsModelList(stepsModelList);
         stepList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
         stepList.setAdapter(stepListAdapter);
+        stepList.setNestedScrollingEnabled(false);
         return rootView;
     }
 

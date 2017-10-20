@@ -1,31 +1,27 @@
 package com.udacity.willbrom.bakingapp.fragments;
 
 
-import android.graphics.BitmapFactory;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
-import com.google.android.exoplayer2.ExoPlaybackException;
-import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
@@ -54,19 +50,37 @@ public class StepDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-        if (!stepsModel.getVideoURL().equals("")) {
-            initializePlayer(Uri.parse(stepsModel.getVideoURL()));
-        } else {
-            mPlayerView.setVisibility(View.GONE);
+        if (savedInstanceState == null) {
+            Log.d(TAG, stepsModel.getDescription());
+            ConnectivityManager connMgr = (ConnectivityManager) getActivity()
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+            if (!stepsModel.getVideoURL().equals("") && (networkInfo != null && networkInfo.isConnected())) {
+                initializePlayer(Uri.parse(stepsModel.getVideoURL()));
+            } else {
+                mPlayerView.setVisibility(View.GONE);
+            }
         }
 
         if (savedInstanceState != null) {
             stepsModel = (StepsModel) savedInstanceState.getSerializable("ser");
             description.setText(stepsModel.getDescription());
+            if (!stepsModel.getVideoURL().equals("")) {
+                initializePlayer(Uri.parse(stepsModel.getVideoURL()));
+            } else {
+                mPlayerView.setVisibility(View.GONE);
+            }
         } else {
             description.setText(stepsModel.getDescription());
         }
+
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     private void initializePlayer(Uri mediaUri) {
@@ -85,7 +99,7 @@ public class StepDetailFragment extends Fragment {
     }
 
     private void releasePlayer() {
-        if (!stepsModel.getVideoURL().equals("")) {
+        if (!stepsModel.getVideoURL().equals("") && mExoPlayer != null) {
             mExoPlayer.stop();
             mExoPlayer.release();
             mExoPlayer = null;
@@ -102,7 +116,8 @@ public class StepDetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        releasePlayer();
+        if (stepsModel != null)
+            releasePlayer();
     }
 
     public void setStepsModel(StepsModel stepsModel) {

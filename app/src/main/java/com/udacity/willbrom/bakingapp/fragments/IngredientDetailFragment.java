@@ -40,6 +40,7 @@ public class IngredientDetailFragment extends Fragment {
         ingredientList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
         adapter = new IngredientListAdapter();
         ingredientList.setAdapter(adapter);
+        ingredientList.setNestedScrollingEnabled(false);
         adapter.setIngredientsModelList(ingredientsModelList);
         return rootView;
     }
