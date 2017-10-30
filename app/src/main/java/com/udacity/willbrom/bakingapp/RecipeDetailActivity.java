@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.udacity.willbrom.bakingapp.fragments.IngredientDetailFragment;
 import com.udacity.willbrom.bakingapp.fragments.RecipeIngredientFragment;
@@ -17,6 +18,9 @@ import com.udacity.willbrom.bakingapp.model.StepsModel;
 import java.io.Serializable;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeDetailActivity extends AppCompatActivity
         implements RecipeIngredientFragment.OnIngredientItemClickListener,
         RecipeStepFragment.OnStepItemClickListener {
@@ -26,16 +30,19 @@ public class RecipeDetailActivity extends AppCompatActivity
     private boolean mIngredientSelected = true;
     private StepsModel stepsModelSave;
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
+    @BindView(R.id.title_text_view) TextView titleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         recipeModel = (RecipeModel) bundle.getSerializable("key");
         mTwoPane = false;
+        titleTextView.setText(recipeModel.getName());
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 

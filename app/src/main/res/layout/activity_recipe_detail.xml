@@ -15,6 +15,16 @@
             android:focusableInTouchMode="true"
             android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/title_text_view"
+                android:fontFamily="cursive"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <FrameLayout
                 android:id="@+id/recipe_ingredient_container"
                 android:layout_width="match_parent"
@@ -28,7 +38,7 @@
             <TextView
                 android:text="Steps"
                 android:fontFamily="cursive"
-                android:textStyle="bold"
+                android:textStyle="normal"
                 android:textSize="24sp"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="3dp"
