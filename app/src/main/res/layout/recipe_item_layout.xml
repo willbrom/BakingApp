@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_margin="5dp"
         android:layout_gravity="center"
-        app:cardElevation="@dimen/cardview_default_elevation">
+        app:cardElevation="4dp">
         
         <RelativeLayout
             android:layout_width="match_parent"

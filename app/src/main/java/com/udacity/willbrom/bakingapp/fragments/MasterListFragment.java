@@ -74,6 +74,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
         View rootView = inflater.inflate(R.layout.fragment_master_list, container, false);
         unbinder = ButterKnife.bind(this, rootView);
         recipeListAdapter = new RecipeListAdapter(this);
+        recipeList.setNestedScrollingEnabled(false);
 
         if (rootView.findViewById(R.id.check_view) != null) {
             mTwoPane = true;

@@ -49,7 +49,7 @@ public class StepDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
         unbinder = ButterKnife.bind(this, rootView);
-        
+
 
         if (savedInstanceState == null) {
             Log.d(TAG, stepsModel.getDescription());
