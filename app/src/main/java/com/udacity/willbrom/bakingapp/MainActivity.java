@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity implements MasterListFragmen
                     .add(R.id.master_list_container, new MasterListFragment())
                     .commit();
         } else {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.master_list_container, new MasterListFragment())
-                    .commit();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.master_list_container, new MasterListFragment())
+//                    .commit();
         }
     }
 

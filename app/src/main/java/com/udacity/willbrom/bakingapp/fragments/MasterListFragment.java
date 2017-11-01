@@ -89,10 +89,16 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
 
         if (savedInstanceState != null) {
             recipeModel = (List<RecipeModel>) savedInstanceState.getSerializable("ser");
-            recipeListAdapter = new RecipeListAdapter(this);
+
+            if (recipeModel != null)
+                Log.d(TAG, recipeModel.get(0).getName() + " " + recipeModel.get(1).getName() + " " + recipeModel.get(2).getName() + " " + recipeModel.get(3).getName());
+            else
+                Log.d(TAG, "recipeModel is Null");
+
             recipeListAdapter.setRecipeModelList(recipeModel);
-            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("par");
-            recipeList.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
+
+//            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("par");
+//            recipeList.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         } else {
             new PerformNetworkTask().execute();
         }
@@ -104,7 +110,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("ser", (Serializable) recipeModel);
-        outState.putParcelable("par", recipeList.getLayoutManager().onSaveInstanceState());
+//        outState.putParcelable("par", recipeList.getLayoutManager().onSaveInstanceState());
     }
 
     @Override
