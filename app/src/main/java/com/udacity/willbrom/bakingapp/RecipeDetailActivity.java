@@ -5,6 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.udacity.willbrom.bakingapp.fragments.IngredientDetailFragment;
@@ -14,6 +17,7 @@ import com.udacity.willbrom.bakingapp.fragments.StepDetailFragment;
 import com.udacity.willbrom.bakingapp.model.IngredientsModel;
 import com.udacity.willbrom.bakingapp.model.RecipeModel;
 import com.udacity.willbrom.bakingapp.model.StepsModel;
+import com.udacity.willbrom.bakingapp.widget.IngredientListService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,6 +35,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     private StepsModel stepsModelSave;
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     @BindView(R.id.title_text_view) TextView titleTextView;
+    public static String recipeTitle = "Recipe Title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,5 +147,23 @@ public class RecipeDetailActivity extends AppCompatActivity
             intent.putExtra(Intent.EXTRA_TEXT, bundle);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_activity_recipe_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_add) {
+            recipeTitle = recipeModel.getName();
+            IngredientListService.startActionChangeIngredientList(this);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
