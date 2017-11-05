@@ -20,6 +20,7 @@ import com.udacity.willbrom.bakingapp.model.StepsModel;
 import com.udacity.willbrom.bakingapp.widget.IngredientListService;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -36,6 +37,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     @BindView(R.id.title_text_view) TextView titleTextView;
     public static String recipeTitle = "Recipe Title";
+    public static List<IngredientsModel> ingredientsModelList = new ArrayList<IngredientsModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +163,7 @@ public class RecipeDetailActivity extends AppCompatActivity
         int itemId = item.getItemId();
         if (itemId == R.id.action_add) {
             recipeTitle = recipeModel.getName();
+            ingredientsModelList = recipeModel.getIngredients();
             IngredientListService.startActionChangeIngredientList(this);
             return true;
         }

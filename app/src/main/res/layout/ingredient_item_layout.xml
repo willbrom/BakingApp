@@ -18,10 +18,11 @@
 
         <TextView
             android:id="@+id/ingredient_title"
-            android:textSize="23sp"
+            android:textSize="27sp"
+            android:textColor="#eb9f6969"
             tools:text="Title"
             android:fontFamily="sans-serif-condensed"
-            android:textStyle="italic"
+            style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"/>
@@ -34,6 +35,7 @@
             <TextView
                 android:text="Quantity: "
                 tools:text="Quantity: "
+                android:textColor="#981a0e0e"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:fontFamily="sans-serif-smallcaps"
@@ -45,6 +47,7 @@
                 android:id="@+id/ingredient_quantity"
                 android:textSize="13sp"
                 android:textStyle="bold"
+                android:textColor="#b99f6969"
                 tools:text="12"
                 android:fontFamily="sans-serif-smallcaps"
                 android:layout_width="wrap_content"
@@ -55,6 +58,7 @@
                 android:id="@+id/ingredient_measure"
                 android:textSize="13sp"
                 android:textStyle="bold"
+                android:textColor="#b99f6969"
                 tools:text="G"
                 android:fontFamily="serif-monospace"
                 android:layout_width="wrap_content"

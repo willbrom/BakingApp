@@ -16,6 +16,7 @@
         <TextView
             android:gravity="center"
             android:text="Ingredient"
+            android:textColor="#eb9f6969"
             android:fontFamily="cursive"
             android:textSize="22sp"
             android:background="?android:selectableItemBackground"

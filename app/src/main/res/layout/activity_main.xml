@@ -14,10 +14,11 @@
             android:layout_height="wrap_content"
             android:text="Recipe's"
             android:textStyle="bold"
-            android:textSize="27sp"
+            android:textSize="35sp"
             android:fontFamily="cursive"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp" />
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"/>
 
         <FrameLayout
             android:id="@+id/master_list_container"

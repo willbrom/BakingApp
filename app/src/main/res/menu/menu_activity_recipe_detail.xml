@@ -6,6 +6,6 @@
         android:id="@+id/action_add"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="Add" />
+        android:title="Add to widget" />
 
 </menu>
