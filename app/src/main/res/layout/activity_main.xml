@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:text="Recipe's"
             android:textStyle="bold"
+            android:textColor="#694949"
             android:textSize="35sp"
             android:fontFamily="cursive"
             android:layout_gravity="center_horizontal"
