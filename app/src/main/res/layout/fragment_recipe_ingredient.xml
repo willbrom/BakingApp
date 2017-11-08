@@ -15,7 +15,7 @@
 
         <TextView
             android:gravity="center"
-            android:text="Ingredient"
+            android:text="@string/ingredient_title"
             android:textColor="#eb9f6969"
             android:fontFamily="cursive"
             android:textSize="22sp"

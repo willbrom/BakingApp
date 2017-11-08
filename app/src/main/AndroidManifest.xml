@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".RecipeDetailActivity"
-            android:label="Detail"
+            android:label="@string/recipe_detail_title"
             android:launchMode="singleTop"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:name=".IngredientDetailActivity"
-            android:label="Ingredient"
+            android:label="@string/ingredient_title"
             android:parentActivityName=".RecipeDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".StepDetailActivity"
-            android:label="Step"
+            android:label="@string/step_detail_title"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".RecipeDetailActivity">
             <meta-data

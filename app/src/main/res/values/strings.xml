@@ -2,4 +2,11 @@
     <string name="app_name">Baking App</string>
     <string name="appwidget_text">Recipe Widget</string>
     <string name="add_widget">Add widget</string>
+    <string name="main_title">Recipe"'s</string>
+    <string name="step_title">Steps</string>
+    <string name="ingredient_title">Ingredient</string>
+    <string name="quantity_title">Quantity:</string>
+    <string name="recipe_detail_title">Recipe detail</string>
+    <string name="step_detail_title">Step detail</string>
+    <string name="no_video_available_title">No video available</string>
 </resources>

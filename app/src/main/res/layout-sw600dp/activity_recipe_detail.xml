@@ -45,7 +45,7 @@
                     android:background="#00ffffff" />
 
                 <TextView
-                    android:text="Steps"
+                    android:text="@string/step_title"
                     android:fontFamily="cursive"
                     android:textStyle="bold"
                     android:textSize="24sp"

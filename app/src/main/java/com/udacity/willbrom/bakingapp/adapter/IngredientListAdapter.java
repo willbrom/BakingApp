@@ -30,7 +30,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
     @Override
     public void onBindViewHolder(IngredientViewHolder holder, int position) {
         holder.ingredientTitle.setText(ingredientsModelList.get(position).getIngredient());
-        holder.ingredientQuantity.setText(String.valueOf(ingredientsModelList.get(position).getQuantity()));
+        holder.ingredientQuantity.setText(" " + String.valueOf(ingredientsModelList.get(position).getQuantity()));
         holder.ingredientMeasure.setText(" " + ingredientsModelList.get(position).getMeasure());
     }
 

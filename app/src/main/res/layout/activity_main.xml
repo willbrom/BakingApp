@@ -12,7 +12,7 @@
             android:id="@+id/recipe_list_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recipe's"
+            android:text="@string/main_title"
             android:textStyle="bold"
             android:textColor="#694949"
             android:textSize="35sp"

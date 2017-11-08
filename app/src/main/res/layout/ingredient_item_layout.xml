@@ -33,7 +33,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="Quantity: "
+                android:text="@string/quantity_title"
                 tools:text="Quantity: "
                 android:textColor="#981a0e0e"
                 android:textSize="15sp"

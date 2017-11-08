@@ -38,6 +38,7 @@ public class StepDetailFragment extends Fragment {
     private static final String TAG = StepDetailFragment.class.getSimpleName();
     private StepsModel stepsModel;
     @BindView(R.id.step_long_description) TextView description;
+    @BindView(R.id.no_video_text_view) TextView noVideoTxt;
     @BindView(R.id.media_player) SimpleExoPlayerView mPlayerView;
     private Unbinder unbinder;
     private SimpleExoPlayer mExoPlayer;
@@ -56,11 +57,12 @@ public class StepDetailFragment extends Fragment {
             ConnectivityManager connMgr = (ConnectivityManager) getActivity()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-
             if (!stepsModel.getVideoURL().equals("") && (networkInfo != null && networkInfo.isConnected())) {
+                noVideoTxt.setVisibility(View.GONE);
                 initializePlayer(Uri.parse(stepsModel.getVideoURL()));
             } else {
                 mPlayerView.setVisibility(View.GONE);
+                noVideoTxt.setVisibility(View.VISIBLE);
             }
         }
 
@@ -68,9 +70,11 @@ public class StepDetailFragment extends Fragment {
             stepsModel = (StepsModel) savedInstanceState.getSerializable("ser");
             description.setText(stepsModel.getDescription());
             if (!stepsModel.getVideoURL().equals("")) {
+                noVideoTxt.setVisibility(View.GONE);
                 initializePlayer(Uri.parse(stepsModel.getVideoURL()));
             } else {
                 mPlayerView.setVisibility(View.GONE);
+                noVideoTxt.setVisibility(View.VISIBLE);
             }
         } else {
             description.setText(stepsModel.getDescription());
