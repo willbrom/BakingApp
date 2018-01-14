@@ -39,6 +39,7 @@
                 android:background="#00ffffff" />
 
             <TextView
+                android:id="@+id/step_title_textView"
                 android:text="@string/step_title"
                 android:fontFamily="cursive"
                 android:textStyle="normal"

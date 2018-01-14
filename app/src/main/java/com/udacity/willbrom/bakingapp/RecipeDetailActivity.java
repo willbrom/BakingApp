@@ -1,6 +1,7 @@
 package com.udacity.willbrom.bakingapp;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class RecipeDetailActivity extends AppCompatActivity
         implements RecipeIngredientFragment.OnIngredientItemClickListener,
@@ -36,6 +38,8 @@ public class RecipeDetailActivity extends AppCompatActivity
     private StepsModel stepsModelSave;
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     @BindView(R.id.title_text_view) TextView titleTextView;
+    @BindView(R.id.step_title_textView) TextView stepTitleTextView;
+    private Unbinder unbinder;
     public static String recipeTitle = "Recipe Title";
     public static List<IngredientsModel> ingredientsModelList = new ArrayList<IngredientsModel>();
 
@@ -43,13 +47,17 @@ public class RecipeDetailActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         recipeModel = (RecipeModel) bundle.getSerializable("key");
         mTwoPane = false;
         titleTextView.setText(recipeModel.getName());
+
+        Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/pacifico-regular.ttf");
+        titleTextView.setTypeface(customFont);
+        stepTitleTextView.setTypeface(customFont);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -168,5 +176,11 @@ public class RecipeDetailActivity extends AppCompatActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

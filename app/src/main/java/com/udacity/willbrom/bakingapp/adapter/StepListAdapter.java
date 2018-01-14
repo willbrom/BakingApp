@@ -1,5 +1,7 @@
 package com.udacity.willbrom.bakingapp.adapter;
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +39,10 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
 
     @Override
     public void onBindViewHolder(StepViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
         holder.stepDescription.setText(stepsModelList.get(position).getShortDescription());
+        Typeface customFont = Typeface.createFromAsset(context.getAssets(), "fonts/satisfy-regular.ttf");
+        holder.stepDescription.setTypeface(customFont);
     }
 
     @Override
