@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -43,6 +45,8 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     private List<RecipeModel> recipeModel;
     private final Type recipeListType = new TypeToken<ArrayList<RecipeModel>>(){}.getType();
     @BindView(R.id.recipe_list) RecyclerView recipeList;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.error_textView) TextView errorTextView;
     private Unbinder unbinder;
     private RecipeListAdapter recipeListAdapter;
     private OnRecipeClickListener recipeClickListener;
@@ -128,6 +132,12 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     public class PerformNetworkTask extends AsyncTask<Void, Void, String>{
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         protected String doInBackground(Void... voids) {
             Log.d(TAG, "doInBackground called!!");
             String returnedJson = NetworkUtils.getHttpResponse(RECIPE_URL);
@@ -137,12 +147,14 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
         @Override
         protected void onPostExecute(String s) {
             Log.d(TAG, "onPostExecute called!!");
+            progressBar.setVisibility(View.INVISIBLE);
             if (s != null) {
                 recipeModel = new Gson().fromJson(s, recipeListType);
                 Log.d(TAG, recipeModel.get(0).getName());
                 recipeListAdapter.setRecipeModelList(recipeModel);
+            } else {
+                errorTextView.setVisibility(View.VISIBLE);
             }
-
         }
 
     }
