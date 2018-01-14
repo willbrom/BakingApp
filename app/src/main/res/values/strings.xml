@@ -9,4 +9,5 @@
     <string name="recipe_detail_title">Recipe detail</string>
     <string name="step_detail_title">Step detail</string>
     <string name="no_video_available_title">No video available</string>
+    <string name="recipe_image_description">Recipe image</string>
 </resources>

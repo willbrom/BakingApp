@@ -1,6 +1,8 @@
 package com.udacity.willbrom.bakingapp.adapter;
 
 
+import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,9 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
 
     @Override
     public void onBindViewHolder(IngredientViewHolder holder, int position) {
+        Context context = holder.itemView.getContext();
+        Typeface customFont = Typeface.createFromAsset(context.getAssets(), "fonts/concertOne-regular.ttf");
+        holder.ingredientTitle.setTypeface(customFont);
         holder.ingredientTitle.setText(ingredientsModelList.get(position).getIngredient());
         holder.ingredientQuantity.setText(" " + String.valueOf(ingredientsModelList.get(position).getQuantity()));
         holder.ingredientMeasure.setText(" " + ingredientsModelList.get(position).getMeasure());
@@ -46,7 +51,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientListAd
         @BindView(R.id.ingredient_quantity) TextView ingredientQuantity;
         @BindView(R.id.ingredient_measure) TextView ingredientMeasure;
 
-        public IngredientViewHolder(View itemView) {
+        IngredientViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

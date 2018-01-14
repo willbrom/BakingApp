@@ -2,7 +2,11 @@ package com.udacity.willbrom.bakingapp.adapter;
 
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,19 +48,45 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Context context = holder.recipeThumbnail.getContext();
+        Context context = holder.itemView.getContext();
+        String recipeName = recipeModelList.get(position).getName();
         String imagePath = recipeModelList.get(position).getImage();
+        int recipePic;
 
-        if (imagePath.equals("")) {
-            imagePath = "http://image.tmdb.org";
+        switch (recipeName) {
+            case "Nutella Pie":
+                recipePic = R.drawable.nutella_pie;
+                break;
+            case "Brownies":
+                recipePic = R.drawable.brownies;
+                break;
+            case "Yellow Cake":
+                recipePic = R.drawable.yellow_cake;
+                break;
+            case "Cheesecake":
+                recipePic = R.drawable.cheesecake;
+                break;
+            default:
+                recipePic = R.drawable.image_placeholder;
         }
 
-        holder.recipeTitle.setText(recipeModelList.get(position).getName());
-        Picasso.with(context)
-                .load(imagePath)
-                .placeholder(R.drawable.image_placeholder)
-                .error(R.drawable.image_placeholder)
-                .into(holder.recipeThumbnail);
+        holder.recipeTitle.setText(recipeName);
+        Typeface customFont = Typeface.createFromAsset(context.getAssets(), "fonts/courgette-regular.ttf");
+        holder.recipeTitle.setTypeface(customFont);
+
+        if (imagePath.equals("")) {
+            Picasso.with(context)
+                    .load(recipePic)
+                    .placeholder(R.drawable.image_placeholder)
+                    .error(R.drawable.image_placeholder)
+                    .into(holder.recipeThumbnail);
+        } else {
+            Picasso.with(context)
+                    .load(imagePath)
+                    .placeholder(R.drawable.image_placeholder)
+                    .error(R.drawable.image_placeholder)
+                    .into(holder.recipeThumbnail);
+        }
     }
 
     @Override
@@ -75,7 +105,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
         @BindView(R.id.recipe_thumbnail) ImageView recipeThumbnail;
         @BindView(R.id.recipe_title) TextView recipeTitle;
 
-        public ItemViewHolder(View itemView) {
+        ItemViewHolder(View itemView) {
             super(itemView);
             Log.d(TAG, "ItemViewHolder got called!");
             ButterKnife.bind(this, itemView);
