@@ -2,8 +2,11 @@ package com.udacity.willbrom.bakingapp;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.udacity.willbrom.bakingapp.fragments.MasterListFragment;
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements MasterListFragmen
 
     private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.recipe_list_title) TextView title;
+    @BindView(R.id.nested_scroll_view_mainActivity) NestedScrollView nestedScrollView;
     private Unbinder unbinder;
 
     @Override
@@ -43,6 +47,18 @@ public class MainActivity extends AppCompatActivity implements MasterListFragmen
         bundle.putSerializable("key", recipeModel);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void showErrorSnackBar() {
+        Snackbar.make(nestedScrollView, getString(R.string.error_loading_data), Snackbar.LENGTH_INDEFINITE).setAction(getString(R.string.retry), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.master_list_container, new MasterListFragment())
+                        .commit();
+            }
+        }).show();
     }
 
     @Override

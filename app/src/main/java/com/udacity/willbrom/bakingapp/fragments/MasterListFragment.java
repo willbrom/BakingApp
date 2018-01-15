@@ -2,11 +2,8 @@ package com.udacity.willbrom.bakingapp.fragments;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Binder;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,14 +13,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.udacity.willbrom.bakingapp.R;
-import com.udacity.willbrom.bakingapp.RecipeDetailActivity;
 import com.udacity.willbrom.bakingapp.adapter.RecipeListAdapter;
 import com.udacity.willbrom.bakingapp.model.RecipeModel;
 import com.udacity.willbrom.bakingapp.utilitie.NetworkUtils;
@@ -47,6 +44,8 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     @BindView(R.id.recipe_list) RecyclerView recipeList;
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.error_textView) TextView errorTextView;
+    @BindView(R.id.spin_kit) SpinKitView spinKitView;
+    @BindView(R.id.masterList_mainContainer) FrameLayout masterListMainContainer;
     private Unbinder unbinder;
     private RecipeListAdapter recipeListAdapter;
     private OnRecipeClickListener recipeClickListener;
@@ -54,6 +53,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
 
     public interface OnRecipeClickListener{
         void onRecipeClicked(RecipeModel recipeModel);
+        void showErrorSnackBar();
     }
 
     @Override
@@ -101,8 +101,6 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
 
             recipeListAdapter.setRecipeModelList(recipeModel);
 
-//            Parcelable savedRecyclerLayoutState = savedInstanceState.getParcelable("par");
-//            recipeList.getLayoutManager().onRestoreInstanceState(savedRecyclerLayoutState);
         } else {
             new PerformNetworkTask().execute();
         }
@@ -114,7 +112,6 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putSerializable("ser", (Serializable) recipeModel);
-//        outState.putParcelable("par", recipeList.getLayoutManager().onSaveInstanceState());
     }
 
     @Override
@@ -134,7 +131,7 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            spinKitView.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -147,13 +144,13 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
         @Override
         protected void onPostExecute(String s) {
             Log.d(TAG, "onPostExecute called!!");
-            progressBar.setVisibility(View.INVISIBLE);
+            spinKitView.setVisibility(View.INVISIBLE);
             if (s != null) {
                 recipeModel = new Gson().fromJson(s, recipeListType);
                 Log.d(TAG, recipeModel.get(0).getName());
                 recipeListAdapter.setRecipeModelList(recipeModel);
             } else {
-                errorTextView.setVisibility(View.VISIBLE);
+                recipeClickListener.showErrorSnackBar();
             }
         }
 
