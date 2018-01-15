@@ -5,6 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background"
     tools:context="com.udacity.willbrom.bakingapp.IngredientDetailActivity">
 
     <LinearLayout
@@ -13,8 +14,8 @@
         android:orientation="vertical"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp">
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="22dp">
 
         <TextView
             android:id="@+id/ingredient_title"
@@ -68,6 +69,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="12dp" />
+        android:layout_height="1dp"
+        android:background="#d2b9b9b9"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"/>
 
 </LinearLayout>
