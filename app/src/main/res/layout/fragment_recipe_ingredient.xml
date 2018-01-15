@@ -8,19 +8,21 @@
         android:id="@+id/card_ingredient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="14dp"
         app:cardElevation="@dimen/cardview_default_elevation"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?android:selectableItemBackground">
+        android:background="?android:selectableItemBackground"
+        android:stateListAnimator="@animator/lift_on_touch">
 
         <TextView
             android:id="@+id/ingredient_title_textView"
             android:gravity="center"
             android:text="@string/ingredient_title"
             android:textColor="#eb9f6969"
-            android:fontFamily="cursive"
             android:textSize="22sp"
+            android:padding="4dp"
             android:background="?android:selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

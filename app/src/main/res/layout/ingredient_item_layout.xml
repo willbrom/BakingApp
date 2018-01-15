@@ -13,12 +13,12 @@
         android:orientation="vertical"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp">
 
         <TextView
             android:id="@+id/ingredient_title"
-            android:textSize="27sp"
+            android:textSize="22sp"
             android:textColor="#eb9f6969"
             tools:text="Title"
             android:fontFamily="sans-serif-condensed"
@@ -69,8 +69,7 @@
     </LinearLayout>
 
     <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="#646464"/>
+        android:layout_width="match_parent"
+        android:layout_height="12dp" />
 
 </LinearLayout>

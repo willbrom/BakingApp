@@ -38,7 +38,6 @@
                 android:textStyle="bold"
                 android:textColor="#eb9f6969"
                 android:textSize="22sp"
-                android:fontFamily="cursive"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/recipe_thumbnail"
                 tools:text="Nutella Pie" />
