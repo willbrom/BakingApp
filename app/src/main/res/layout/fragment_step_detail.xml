@@ -32,10 +32,8 @@
 
         <TextView
             android:id="@+id/step_long_description"
-            android:textStyle="bold"
             tools:text="This is some description."
-            android:fontFamily="monospace"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:padding="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
