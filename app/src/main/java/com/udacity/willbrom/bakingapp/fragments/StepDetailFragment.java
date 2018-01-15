@@ -2,6 +2,7 @@ package com.udacity.willbrom.bakingapp.fragments;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -66,9 +67,12 @@ public class StepDetailFragment extends Fragment {
             }
         }
 
+        Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/concertOne-regular.ttf");
+        description.setText(stepsModel.getDescription());
+        description.setTypeface(customFont);
+
         if (savedInstanceState != null) {
             stepsModel = (StepsModel) savedInstanceState.getSerializable("ser");
-            description.setText(stepsModel.getDescription());
             if (!stepsModel.getVideoURL().equals("")) {
                 noVideoTxt.setVisibility(View.GONE);
                 initializePlayer(Uri.parse(stepsModel.getVideoURL()));
@@ -76,8 +80,6 @@ public class StepDetailFragment extends Fragment {
                 mPlayerView.setVisibility(View.GONE);
                 noVideoTxt.setVisibility(View.VISIBLE);
             }
-        } else {
-            description.setText(stepsModel.getDescription());
         }
 
         return rootView;
