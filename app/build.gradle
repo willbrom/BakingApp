@@ -36,6 +36,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
+    compile 'com.github.ybq:Android-SpinKit:1.1.0'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
