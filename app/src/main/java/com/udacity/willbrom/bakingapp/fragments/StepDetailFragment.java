@@ -52,7 +52,6 @@ public class StepDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
         unbinder = ButterKnife.bind(this, rootView);
 
-
         if (savedInstanceState == null) {
             Log.d(TAG, stepsModel.getDescription());
             ConnectivityManager connMgr = (ConnectivityManager) getActivity()
@@ -67,10 +66,6 @@ public class StepDetailFragment extends Fragment {
             }
         }
 
-        Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/concertOne-regular.ttf");
-        description.setText(stepsModel.getDescription());
-        description.setTypeface(customFont);
-
         if (savedInstanceState != null) {
             stepsModel = (StepsModel) savedInstanceState.getSerializable("ser");
             if (!stepsModel.getVideoURL().equals("")) {
@@ -81,6 +76,10 @@ public class StepDetailFragment extends Fragment {
                 noVideoTxt.setVisibility(View.VISIBLE);
             }
         }
+
+        Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/concertOne-regular.ttf");
+        description.setText(stepsModel.getDescription());
+        description.setTypeface(customFont);
 
         return rootView;
     }
