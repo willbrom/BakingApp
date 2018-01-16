@@ -19,7 +19,11 @@
         android:id="@+id/error_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="@string/error_loading_data"
+        android:textColor="@color/colorError"
+        style="@style/Base.TextAppearance.AppCompat.Title" />
 
     <ProgressBar
         android:id="@+id/progressBar"

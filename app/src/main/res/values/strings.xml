@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">Olivia"'s cake house</string>
+    <string name="app_name">Grandma"'s Kitchen</string>
     <string name="appwidget_text">Recipe Widget</string>
     <string name="add_widget">Add widget</string>
     <string name="main_title">Recipe"'s</string>
+    <string name="recipe_title">Title</string>
     <string name="step_title">Steps</string>
     <string name="ingredient_title">Ingredient</string>
     <string name="quantity_title">Quantity:</string>
