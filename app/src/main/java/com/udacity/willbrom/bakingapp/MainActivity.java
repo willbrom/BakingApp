@@ -17,9 +17,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class MainActivity extends AppCompatActivity implements MasterListFragment.OnRecipeClickListener {
+public class MainActivity extends AppCompatActivity implements MasterListFragment.RecipeListener {
 
-    private static final String TAG = MainActivity.class.getSimpleName();
     @BindView(R.id.recipe_list_title) TextView title;
     @BindView(R.id.nested_scroll_view_mainActivity) NestedScrollView nestedScrollView;
     private Unbinder unbinder;

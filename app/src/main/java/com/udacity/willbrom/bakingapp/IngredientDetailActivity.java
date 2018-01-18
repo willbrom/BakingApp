@@ -3,12 +3,8 @@ package com.udacity.willbrom.bakingapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.udacity.willbrom.bakingapp.fragments.IngredientDetailFragment;
-import com.udacity.willbrom.bakingapp.fragments.MasterListFragment;
-import com.udacity.willbrom.bakingapp.fragments.RecipeIngredientFragment;
 import com.udacity.willbrom.bakingapp.model.IngredientsModel;
 
 import java.util.List;
@@ -16,7 +12,6 @@ import java.util.List;
 public class IngredientDetailActivity extends AppCompatActivity {
 
     private List<IngredientsModel> ingredientsModelList;
-    private static final String TAG = IngredientDetailActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

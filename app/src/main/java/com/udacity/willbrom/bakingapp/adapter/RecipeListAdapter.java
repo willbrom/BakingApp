@@ -2,13 +2,8 @@ package com.udacity.willbrom.bakingapp.adapter;
 
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +19,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.ItemViewHolder> {
 
     private List<RecipeModel> recipeModelList;
     private final ItemClickListener itemClickListener;
-    private static final String TAG = RecipeListAdapter.class.getSimpleName();
 
     public interface ItemClickListener {
         void onClick(RecipeModel recipeModel);
@@ -40,7 +35,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder got called!!");
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.recipe_item_layout, parent, false);
         return new ItemViewHolder(view);
@@ -107,7 +101,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            Log.d(TAG, "ItemViewHolder got called!");
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
         }
@@ -119,5 +112,4 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.It
         }
 
     }
-
 }

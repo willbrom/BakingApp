@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,16 +31,14 @@ import com.udacity.willbrom.bakingapp.model.StepsModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 
 public class StepDetailFragment extends Fragment {
 
-    private static final String TAG = StepDetailFragment.class.getSimpleName();
     private StepsModel stepsModel;
     @BindView(R.id.step_long_description) TextView description;
     @BindView(R.id.no_video_text_view) TextView noVideoTxt;
     @BindView(R.id.media_player) SimpleExoPlayerView mPlayerView;
-    private Unbinder unbinder;
     private SimpleExoPlayer mExoPlayer;
 
     public StepDetailFragment() {}
@@ -50,10 +47,9 @@ public class StepDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
 
         if (savedInstanceState == null) {
-            Log.d(TAG, stepsModel.getDescription());
             ConnectivityManager connMgr = (ConnectivityManager) getActivity()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -121,7 +117,6 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
         if (stepsModel != null)
             releasePlayer();
     }
@@ -129,5 +124,4 @@ public class StepDetailFragment extends Fragment {
     public void setStepsModel(StepsModel stepsModel) {
         this.stepsModel = stepsModel;
     }
-
 }

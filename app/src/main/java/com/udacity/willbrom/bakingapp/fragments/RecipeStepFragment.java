@@ -7,11 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.udacity.willbrom.bakingapp.R;
 import com.udacity.willbrom.bakingapp.adapter.StepListAdapter;
@@ -21,15 +19,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
+
 
 public class RecipeStepFragment extends Fragment implements StepListAdapter.StepItemClickListener {
 
-    private static final String TAG = RecipeStepFragment.class.getSimpleName();
     private List<StepsModel> stepsModelList;
     @BindView(R.id.step_list) RecyclerView stepList;
-    private Unbinder unbinder;
     private OnStepItemClickListener clickListener;
 
     public interface OnStepItemClickListener {
@@ -54,7 +49,7 @@ public class RecipeStepFragment extends Fragment implements StepListAdapter.Step
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe_step, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         StepListAdapter stepListAdapter = new StepListAdapter(this);
         stepListAdapter.setStepsModelList(stepsModelList);
         stepList.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -64,14 +59,7 @@ public class RecipeStepFragment extends Fragment implements StepListAdapter.Step
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onClickStep(StepsModel stepsModel) {
-        Log.d(TAG, stepsModel.getShortDescription());
         clickListener.onStepItemClicked(stepsModel);
     }
 

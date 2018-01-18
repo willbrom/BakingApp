@@ -18,14 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 
 public class RecipeIngredientFragment extends Fragment {
 
     private List<IngredientsModel> ingredientsModelList;
     private OnIngredientItemClickListener clickListener;
-    private Unbinder unbinder;
     @BindView(R.id.ingredient_title_textView) TextView ingredientTitle;
 
     public interface OnIngredientItemClickListener {
@@ -50,7 +48,7 @@ public class RecipeIngredientFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe_ingredient, container, false);
-        unbinder = ButterKnife.bind(this, rootView);
+        ButterKnife.bind(this, rootView);
         Typeface customFont = Typeface.createFromAsset(getActivity().getAssets(), "fonts/satisfy-regular.ttf");
         ingredientTitle.setTypeface(customFont);
         return rootView;
@@ -59,12 +57,6 @@ public class RecipeIngredientFragment extends Fragment {
     @OnClick(R.id.card_ingredient)
     void onClick() {
         clickListener.onIngredientItemClicked(ingredientsModelList);
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     public void setIngredientsModelList(List<IngredientsModel> ingredientsModelList) {
