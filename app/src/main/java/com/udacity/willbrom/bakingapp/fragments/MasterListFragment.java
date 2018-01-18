@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,10 +38,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public class MasterListFragment extends Fragment implements RecipeListAdapter.ItemClickListener {
+public class MasterListFragment extends Fragment implements RecipeListAdapter.ItemClickListener, LoaderManager.LoaderCallbacks<String> {
 
     private static final String TAG = MasterListFragment.class.getSimpleName();
     private static final String RECIPE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    private static final String RECIPE_URL_EXTRA = "recipe";
+    private static final int RECIPE_LOADER = 11;
     private List<RecipeModel> recipeModel;
     private final Type recipeListType = new TypeToken<ArrayList<RecipeModel>>(){}.getType();
     @BindView(R.id.recipe_list) RecyclerView recipeList;
@@ -91,18 +96,34 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
         recipeList.setHasFixedSize(true);
         recipeList.setAdapter(recipeListAdapter);
 
-        if (savedInstanceState != null) {
-            recipeModel = (List<RecipeModel>) savedInstanceState.getSerializable("ser");
+//        if (savedInstanceState != null) {
+//            recipeModel = (List<RecipeModel>) savedInstanceState.getSerializable("ser");
+//
+//            if (recipeModel != null)
+//                Log.d(TAG, recipeModel.get(0).getName() + " " + recipeModel.get(1).getName() + " " + recipeModel.get(2).getName() + " " + recipeModel.get(3).getName());
+//            else
+//                Log.d(TAG, "recipeModel is Null");
+//
+//            recipeListAdapter.setRecipeModelList(recipeModel);
+//
+//        } else {
+//            new PerformNetworkTask().execute();
+//        }
 
-            if (recipeModel != null)
-                Log.d(TAG, recipeModel.get(0).getName() + " " + recipeModel.get(1).getName() + " " + recipeModel.get(2).getName() + " " + recipeModel.get(3).getName());
-            else
-                Log.d(TAG, "recipeModel is Null");
+        LoaderManager loaderManager = getActivity().getSupportLoaderManager();
+        if (savedInstanceState == null) {
+            Bundle recipeBundle = new Bundle();
+            recipeBundle.putString(RECIPE_URL_EXTRA, RECIPE_URL);
 
-            recipeListAdapter.setRecipeModelList(recipeModel);
+            Loader<String> recipeLoader = loaderManager.getLoader(RECIPE_LOADER);
 
+            if (recipeLoader == null) {
+                loaderManager.initLoader(RECIPE_LOADER, recipeBundle, this);
+            } else {
+                loaderManager.restartLoader(RECIPE_LOADER, recipeBundle, this);
+            }
         } else {
-            new PerformNetworkTask().execute();
+            loaderManager.initLoader(RECIPE_LOADER, null, this);
         }
 
         return rootView;
@@ -115,15 +136,56 @@ public class MasterListFragment extends Fragment implements RecipeListAdapter.It
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void onClick(RecipeModel recipeModel) {
         Log.d(TAG, recipeModel.getName());
         recipeClickListener.onRecipeClicked(recipeModel);
+    }
+
+    @Override
+    public Loader<String> onCreateLoader(int id, final Bundle args) {
+        return new AsyncTaskLoader<String>(getContext()) {
+
+            String mRecipeJson;
+
+            @Override
+            protected void onStartLoading() {
+                spinKitView.setVisibility(View.VISIBLE);
+
+                if (mRecipeJson != null) {
+                    deliverResult(mRecipeJson);
+                } else {
+                    forceLoad();
+                }
+            }
+
+            @Override
+            public String loadInBackground() {
+                String recipeUrlString = args.getString(RECIPE_URL_EXTRA);
+                return NetworkUtils.getHttpResponse(recipeUrlString);
+            }
+
+            @Override
+            public void deliverResult(String data) {
+                mRecipeJson = data;
+                super.deliverResult(data);
+            }
+        };
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+        spinKitView.setVisibility(View.INVISIBLE);
+        if (data != null) {
+            recipeModel = new Gson().fromJson(data, recipeListType);
+            recipeListAdapter.setRecipeModelList(recipeModel);
+        } else {
+            recipeClickListener.showErrorSnackBar();
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+
     }
 
     public class PerformNetworkTask extends AsyncTask<Void, Void, String>{
