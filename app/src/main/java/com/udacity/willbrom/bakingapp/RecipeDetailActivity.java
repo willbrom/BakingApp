@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,7 +35,6 @@ public class RecipeDetailActivity extends AppCompatActivity
     private boolean mTwoPane;
     private boolean mIngredientSelected = true;
     private StepsModel stepsModelSave;
-    private static final String TAG = RecipeDetailActivity.class.getSimpleName();
     @BindView(R.id.title_text_view) TextView titleTextView;
     @BindView(R.id.step_title_textView) TextView stepTitleTextView;
     private Unbinder unbinder;
@@ -54,6 +52,7 @@ public class RecipeDetailActivity extends AppCompatActivity
         recipeModel = (RecipeModel) bundle.getSerializable("key");
         mTwoPane = false;
         titleTextView.setText(recipeModel.getName());
+        getSupportActionBar().setTitle(recipeModel.getName());
 
         Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/pacifico-regular.ttf");
         titleTextView.setTypeface(customFont);
@@ -73,6 +72,7 @@ public class RecipeDetailActivity extends AppCompatActivity
                     .replace(R.id.recipe_ingredient_container, ingredientFragment)
                     .commit();
         }
+
         RecipeStepFragment stepFragment = new RecipeStepFragment();
         stepFragment.setStepsModelList(recipeModel.getSteps());
 
@@ -89,20 +89,15 @@ public class RecipeDetailActivity extends AppCompatActivity
                         .add(R.id.detail_container, ingredientDetailFragment)
                         .commit();
             } else {
-                Log.d(TAG, "device rotated");
                 Bundle bundle1 = savedInstanceState.getBundle("bun");
                 mIngredientSelected = bundle1.getBoolean("bol");
-                Log.d(TAG, mIngredientSelected + "");
                 if (mIngredientSelected) {
-                    Log.d(TAG, "Ingredient selected");
                     fragmentManager.beginTransaction()
                             .replace(R.id.detail_container, ingredientDetailFragment)
                             .commit();
                 } else {
-                    Log.d(TAG, "Steps selected");
                     StepsModel stepsModel = (StepsModel) bundle1.getSerializable("ser");
                     stepsModelSave = stepsModel;
-                    Log.d(TAG, stepsModel.getVideoURL());
                     StepDetailFragment stepDetailFragment = new StepDetailFragment();
                     stepDetailFragment.setStepsModel(stepsModel);
                     fragmentManager.beginTransaction()
