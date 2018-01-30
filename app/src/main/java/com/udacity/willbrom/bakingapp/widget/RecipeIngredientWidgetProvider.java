@@ -14,10 +14,8 @@ import com.udacity.willbrom.bakingapp.R;
  */
 public class RecipeIngredientWidgetProvider extends AppWidgetProvider {
 
-    private static final String TAG = "widget";
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, String recipeName, int appWidgetId) {
-        Log.d(TAG, "updateAppWidget");
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recipe_ingredient_widget);
         views.setTextViewText(R.id.appwidget_text, recipeName);
         Intent intent = new Intent(context, ListViewService.class);
@@ -27,12 +25,10 @@ public class RecipeIngredientWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.d(TAG, "onUpdate");
         IngredientListService.startActionChangeIngredientList(context);
     }
 
     public static void updateIngredientWidgets(Context context, AppWidgetManager appWidgetManager, String recipeName, int[] appWidgetIds) {
-        Log.d(TAG, "updateIngredientWidget");
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, recipeName, appWidgetId);
         }

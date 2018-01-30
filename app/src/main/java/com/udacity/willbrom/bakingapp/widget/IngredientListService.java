@@ -6,7 +6,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.udacity.willbrom.bakingapp.R;
 import com.udacity.willbrom.bakingapp.RecipeDetailActivity;
@@ -37,7 +36,9 @@ public class IngredientListService extends IntentService {
         // a temporary solution for Android 8.0
         try {
             context.startService(intent);
-        } catch (IllegalStateException ex) {}
+        } catch (IllegalStateException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void handleActionChangeIngredientList() {

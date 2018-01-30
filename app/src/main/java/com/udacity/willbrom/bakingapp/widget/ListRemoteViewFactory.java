@@ -1,7 +1,6 @@
 package com.udacity.willbrom.bakingapp.widget;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -15,12 +14,10 @@ import java.util.List;
 
 public class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
-    private static final String TAG = "widget";
     private Context mContext;
     private List<IngredientsModel> modelList = new ArrayList<IngredientsModel>();
 
     public ListRemoteViewFactory(Context context) {
-        Log.d(TAG, "ListRemoteViewFactory");
         mContext = context;
     }
 
@@ -31,7 +28,6 @@ public class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public void onDataSetChanged() {
-        Log.d(TAG, "onDataSetChanged");
         modelList = RecipeDetailActivity.ingredientsModelList;
     }
 
@@ -42,14 +38,12 @@ public class ListRemoteViewFactory implements RemoteViewsService.RemoteViewsFact
 
     @Override
     public int getCount() {
-        Log.d(TAG, "getCount");
         if (modelList == null) return 0;
         return modelList.size();
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
-        Log.d(TAG, "getViewAt");
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_view_item);
         remoteViews.setTextViewText(R.id.widget_list_view_text_ingredient, modelList.get(i).getIngredient());
         remoteViews.setTextViewText(R.id.widget_list_view_text_quantity, modelList.get(i).getQuantity() + "");
