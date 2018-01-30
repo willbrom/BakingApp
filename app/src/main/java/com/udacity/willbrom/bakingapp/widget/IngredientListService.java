@@ -15,7 +15,6 @@ import com.udacity.willbrom.bakingapp.RecipeDetailActivity;
 public class IngredientListService extends IntentService {
 
     public static final String ACTION_CHANGE_INGREDIENT_LIST = "com.udacity.willbrom.bakingapp.widget.action.change_list";
-    private static final String TAG = "widget";
 
     public IngredientListService() {
         super("IngredientListService");
@@ -23,7 +22,6 @@ public class IngredientListService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Log.d(TAG, "onHandleIntent");
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_CHANGE_INGREDIENT_LIST.equals(action)) {
@@ -33,14 +31,16 @@ public class IngredientListService extends IntentService {
     }
 
     public static void startActionChangeIngredientList(Context context) {
-        Log.d(TAG, "startActionChangeIngredientList");
         Intent intent = new Intent(context, IngredientListService.class);
         intent.setAction(ACTION_CHANGE_INGREDIENT_LIST);
-        context.startService(intent);
+
+        // a temporary solution for Android 8.0
+        try {
+            context.startService(intent);
+        } catch (IllegalStateException ex) {}
     }
 
     private void handleActionChangeIngredientList() {
-        Log.d(TAG, "handleActionChangeIngredientList");
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, RecipeIngredientWidgetProvider.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list_view);
