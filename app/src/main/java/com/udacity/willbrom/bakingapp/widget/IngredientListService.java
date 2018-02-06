@@ -29,15 +29,17 @@ public class IngredientListService extends IntentService {
         }
     }
 
-    public static void startActionChangeIngredientList(Context context) {
+    public static boolean startActionChangeIngredientList(Context context) {
         Intent intent = new Intent(context, IngredientListService.class);
         intent.setAction(ACTION_CHANGE_INGREDIENT_LIST);
 
         // a temporary solution for Android 8.0
         try {
             context.startService(intent);
+            return true;
         } catch (IllegalStateException ex) {
             ex.printStackTrace();
+            return false;
         }
     }
 

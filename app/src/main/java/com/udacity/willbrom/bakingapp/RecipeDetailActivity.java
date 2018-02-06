@@ -2,12 +2,14 @@ package com.udacity.willbrom.bakingapp;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.udacity.willbrom.bakingapp.fragments.IngredientDetailFragment;
@@ -37,6 +39,7 @@ public class RecipeDetailActivity extends AppCompatActivity
     private StepsModel stepsModelSave;
     @BindView(R.id.title_text_view) TextView titleTextView;
     @BindView(R.id.step_title_textView) TextView stepTitleTextView;
+    @BindView(R.id.parent_container) FrameLayout parentContainer;
     private Unbinder unbinder;
     public static String recipeTitle = "Recipe Title";
     public static List<IngredientsModel> ingredientsModelList = new ArrayList<IngredientsModel>();
@@ -164,10 +167,17 @@ public class RecipeDetailActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        boolean recipeAdded;
         if (itemId == R.id.action_add) {
             recipeTitle = recipeModel.getName();
             ingredientsModelList = recipeModel.getIngredients();
-            IngredientListService.startActionChangeIngredientList(this);
+            recipeAdded = IngredientListService.startActionChangeIngredientList(this);
+
+            if (recipeAdded)
+                Snackbar.make(parentContainer, R.string.widget_added_text, Snackbar.LENGTH_SHORT).show();
+            else
+                Snackbar.make(parentContainer, R.string.widget_not_added_text, Snackbar.LENGTH_SHORT).show();
+
             return true;
         }
         return super.onOptionsItemSelected(item);

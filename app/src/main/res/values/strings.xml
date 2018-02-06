@@ -13,4 +13,6 @@
     <string name="recipe_image_description">Recipe image</string>
     <string name="error_loading_data">Error loading data</string>
     <string name="retry">RETRY</string>
+    <string name="widget_added_text">Ingredient\'s added to widget!</string>
+    <string name="widget_not_added_text">Some problem occurred. Try again.</string>
 </resources>
